@@ -5,7 +5,7 @@
     <meta name="description" content="Sistema de gestão para clínicas veterinárias e pet shops">
     <meta name="author" content="Isabella Vasconcelos Fernandes Piassa">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PetHome</title>
+    <title>PetSystem</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
@@ -15,19 +15,19 @@
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         :root {
-            --pet-cream:       #fdf8f0;
-            --pet-sage:        #8b5e3c;
-            --pet-sage-hover:  #744e30;
-            --pet-sage-light:  #f5ebe0;
-            --pet-sage-mid:    #f0d080;
-            --pet-warm:        #d4a04a;
-            --pet-dark:        #2e1f0f;
-            --pet-dark-2:      #3d2a14;
-            --pet-dark-3:      #4e3520;
-            --pet-muted:       #7a5c40;
-            --pet-muted-light: #b89a7a;
-            --pet-muted-nav:   #d4b896;
-            --pet-border:      #e0cdb8;
+            --pet-cream:       #faf7f2;
+            --pet-sage:        #4a7c59;
+            --pet-sage-hover:  #3d6b4b;
+            --pet-sage-light:  #e8f0eb;
+            --pet-sage-mid:    #7db890;
+            --pet-warm:        #c17f3e;
+            --pet-dark:        #1e2825;
+            --pet-dark-2:      #2a3830;
+            --pet-dark-3:      #344a3d;
+            --pet-muted:       #6b7c72;
+            --pet-muted-light: #9db5a3;
+            --pet-muted-nav:   #b8c9bb;
+            --pet-border:      #d4ddd7;
             --font-display:    'Playfair Display', Georgia, serif;
             --font-body:       'DM Sans', system-ui, sans-serif;
         }
@@ -207,12 +207,7 @@
             overflow: hidden;
         }
 
-        .about-img img {
-            width: 100%;
-            height: 220px;
-            object-fit: cover;
-            display: block;
-        }
+        .about-img-icon { font-size: 4rem; margin-bottom: 0.5rem; }
 
         .about-img figcaption {
             font-size: 0.8rem;
@@ -336,78 +331,144 @@
 
         .plans-title-wrap .section-title { text-align: center; }
 
-        /* === TABELA DE PLANOS === */
-        .plans-table {
-            width: 100%;
-            border-collapse: collapse;
+        .plans-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
             margin-top: 2rem;
-            font-size: 0.95rem;
         }
 
-        .plans-table thead tr {
+        .plan-card {
+            border: 0.5px solid var(--pet-border);
+            border-radius: 14px;
+            padding: 2rem 1.75rem;
+            background: var(--pet-cream);
+            position: relative;
+            transition: transform 0.2s;
+        }
+
+        .plan-card:hover { transform: translateY(-4px); }
+
+        .plan-card.featured {
             background: var(--pet-dark);
+            border-color: var(--pet-dark);
+        }
+
+        .plan-card.featured .plan-name  { color: var(--pet-sage-mid); }
+        .plan-card.featured .plan-price { color: #fff; }
+        .plan-card.featured .plan-sub   { color: var(--pet-muted-light); }
+        .plan-card.featured .plan-feature { color: var(--pet-muted-nav); border-bottom-color: var(--pet-dark-3); }
+
+        .featured-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--pet-sage);
             color: #fff;
-        }
-
-        .plans-table thead th {
-            padding: 1rem 1.25rem;
-            text-align: left;
-            font-weight: 500;
-            font-size: 0.85rem;
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
-        }
-
-        .plans-table thead th:first-child { border-radius: 10px 0 0 0; }
-        .plans-table thead th:last-child  { border-radius: 0 10px 0 0; }
-
-        .plans-table tbody tr {
-            border-bottom: 0.5px solid var(--pet-border);
-            transition: background 0.15s;
-        }
-
-        .plans-table tbody tr:hover { background: var(--pet-sage-light); }
-
-        .plans-table tbody td {
-            padding: 1rem 1.25rem;
-            color: var(--pet-muted);
-            vertical-align: middle;
-        }
-
-        .plans-table tbody tr:last-child { border-bottom: none; }
-
-        .featured-row { background: #fffbee; }
-        .featured-row td { color: var(--pet-dark); font-weight: 500; }
-        .featured-row:hover { background: #fff8d6 !important; }
-
-        .plan-badge {
-            display: inline-block;
-            padding: 4px 14px;
+            font-size: 0.72rem;
+            padding: 3px 14px;
             border-radius: 20px;
-            background: var(--pet-sage-light);
-            color: var(--pet-sage);
-            font-size: 0.82rem;
+            letter-spacing: 0.06em;
             font-weight: 500;
+            white-space: nowrap;
         }
 
-        .featured-badge-table {
-            background: var(--pet-sage-mid);
-            color: var(--pet-dark);
+        .plan-name {
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--pet-muted);
+            margin-bottom: 1rem;
         }
 
-        .plan-price-cell {
+        .plan-price {
             font-family: var(--font-display);
-            font-size: 1.6rem;
+            font-size: 2.8rem;
             font-weight: 700;
-            color: var(--pet-dark) !important;
+            color: var(--pet-dark);
+            line-height: 1;
         }
 
-        .plan-price-cell sup {
-            font-size: 0.85rem;
-            font-family: var(--font-body);
-            font-weight: 400;
+        .plan-price sup {
+            font-size: 1rem;
             vertical-align: super;
+            font-family: var(--font-body);
+            font-weight: 300;
         }
+
+        .plan-sub {
+            font-size: 0.8rem;
+            color: var(--pet-muted);
+            margin-top: 0.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .plan-divider {
+            border: none;
+            border-top: 0.5px solid var(--pet-border);
+            margin-bottom: 1.5rem;
+        }
+
+        .plan-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.88rem;
+            color: var(--pet-muted);
+            padding: 0.4rem 0;
+            border-bottom: 0.5px solid var(--pet-border);
+        }
+
+        .plan-feature:last-of-type { border-bottom: none; }
+
+        .plan-check {
+            width: 16px;
+            height: 16px;
+            background: var(--pet-sage-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .plan-check svg {
+            width: 9px;
+            height: 9px;
+            stroke: var(--pet-sage);
+            fill: none;
+            stroke-width: 2.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .plan-btn {
+            display: block;
+            text-align: center;
+            margin-top: 1.75rem;
+            padding: 0.8rem;
+            border: 1px solid var(--pet-sage);
+            color: var(--pet-sage);
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            background: transparent;
+            width: 100%;
+            transition: background 0.2s, color 0.2s;
+            font-family: var(--font-body);
+        }
+
+        .plan-btn:hover { background: var(--pet-sage); color: #fff; }
+
+        .plan-card.featured .plan-btn {
+            background: var(--pet-sage);
+            color: #fff;
+            border-color: var(--pet-sage);
+        }
+
+        .plan-card.featured .plan-btn:hover { background: var(--pet-sage-hover); }
 
         /* === CONTATO === */
         .contact-section {
@@ -612,7 +673,7 @@
     <section id="sobre" class="content">
         <div class="about-grid">
             <figure class="about-img">
-                <img src="img/pet.jpg" alt="Clínica veterinária moderna com atendimento a pets" width="100%">
+                <div class="about-img-icon">🐾</div>
                 <figcaption>Gestão completa para clínicas e pet shops</figcaption>
             </figure>
             <div class="about-text">
@@ -665,7 +726,7 @@
                     <div class="video-wrap">
                         <iframe
                             src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-                            title="Demonstração PetHome"
+                            title="Demonstração PetSystem"
                             allowfullscreen>
                         </iframe>
                     </div>
@@ -682,36 +743,68 @@
                 <h2 class="section-title">Escolha o plano ideal</h2>
             </div>
 
-            <table class="plans-table">
-                <thead>
-                    <tr>
-                        <th>Plano</th>
-                        <th>Preço / mês</th>
-                        <th>Funcionalidades</th>
-                        <th>Suporte</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><span class="plan-badge">Básico</span></td>
-                        <td class="plan-price-cell"><sup>R$</sup>49</td>
-                        <td>Agenda online, cadastro de clientes</td>
-                        <td>E-mail</td>
-                    </tr>
-                    <tr class="featured-row">
-                        <td><span class="plan-badge featured-badge-table">Profissional ⭐</span></td>
-                        <td class="plan-price-cell"><sup>R$</sup>99</td>
-                        <td>Agenda, cadastro, prontuários digitais, relatórios financeiros</td>
-                        <td>E-mail + Chat</td>
-                    </tr>
-                    <tr>
-                        <td><span class="plan-badge">Premium</span></td>
-                        <td class="plan-price-cell"><sup>R$</sup>149</td>
-                        <td>Tudo do Profissional + multi-unidades</td>
-                        <td>Prioritário 24h</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="plans-grid">
+                <div class="plan-card">
+                    <p class="plan-name">Básico</p>
+                    <p class="plan-price"><sup>R$</sup>49</p>
+                    <p class="plan-sub">por mês</p>
+                    <hr class="plan-divider">
+                    <div class="plan-feature">
+                        <div class="plan-check"><svg viewBox="0 0 10 10" aria-hidden="true"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div>
+                        Agenda online
+                    </div>
+                    <div class="plan-feature">
+                        <div class="plan-check"><svg viewBox="0 0 10 10" aria-hidden="true"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div>
+                        Cadastro de clientes
+                    </div>
+                    <div class="plan-feature">
+                        <div class="plan-check"><svg viewBox="0 0 10 10" aria-hidden="true"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div>
+                        Suporte por e-mail
+                    </div>
+                    <button class="plan-btn" type="button">Começar agora</button>
+                </div>
+
+                <div class="plan-card featured">
+                    <div class="featured-badge">Mais popular</div>
+                    <p class="plan-name">Profissional</p>
+                    <p class="plan-price"><sup>R$</sup>99</p>
+                    <p class="plan-sub">por mês</p>
+                    <hr class="plan-divider" style="border-top-color: #344a3d;">
+                    <div class="plan-feature">
+                        <div class="plan-check"><svg viewBox="0 0 10 10" aria-hidden="true"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div>
+                        Tudo do Básico
+                    </div>
+                    <div class="plan-feature">
+                        <div class="plan-check"><svg viewBox="0 0 10 10" aria-hidden="true"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div>
+                        Prontuários digitais
+                    </div>
+                    <div class="plan-feature">
+                        <div class="plan-check"><svg viewBox="0 0 10 10" aria-hidden="true"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div>
+                        Relatórios financeiros
+                    </div>
+                    <button class="plan-btn" type="button">Começar agora</button>
+                </div>
+
+                <div class="plan-card">
+                    <p class="plan-name">Premium</p>
+                    <p class="plan-price"><sup>R$</sup>149</p>
+                    <p class="plan-sub">por mês</p>
+                    <hr class="plan-divider">
+                    <div class="plan-feature">
+                        <div class="plan-check"><svg viewBox="0 0 10 10" aria-hidden="true"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div>
+                        Tudo do Profissional
+                    </div>
+                    <div class="plan-feature">
+                        <div class="plan-check"><svg viewBox="0 0 10 10" aria-hidden="true"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div>
+                        Multi-unidades
+                    </div>
+                    <div class="plan-feature">
+                        <div class="plan-check"><svg viewBox="0 0 10 10" aria-hidden="true"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div>
+                        Suporte prioritário 24h
+                    </div>
+                    <button class="plan-btn" type="button">Começar agora</button>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -730,7 +823,7 @@
                             <polyline points="22,6 12,13 2,6"/>
                         </svg>
                     </div>
-                    <span>contato@pethome.com.br</span>
+                    <span>contato@petsystem.com.br</span>
                 </div>
 
                 <div class="contact-detail">
@@ -778,7 +871,7 @@
 </main>
 
 <footer>
-    <p>© 2026 <span>PetHome</span> — Todos os direitos reservados</p>
+    <p>© 2026 <span>PetSystem</span> — Todos os direitos reservados</p>
 </footer>
 
 </body>
