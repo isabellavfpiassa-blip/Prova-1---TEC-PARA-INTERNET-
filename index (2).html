@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Sistema de gestão para clínicas veterinárias e pet shops">
+    <meta name="author" content="Isabella Vasconcelos Fernandes Piassa">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetHome</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* === RESET & BASE === */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --pet-cream:       #fdf8f0;
+            --pet-sage:        #8b5e3c;
+            --pet-sage-hover:  #744e30;
+            --pet-sage-light:  #f5ebe0;
+            --pet-sage-mid:    #f0d080;
+            --pet-warm:        #d4a04a;
+            --pet-dark:        #2e1f0f;
+            --pet-dark-2:      #3d2a14;
+            --pet-dark-3:      #4e3520;
+            --pet-muted:       #7a5c40;
+            --pet-muted-light: #b89a7a;
+            --pet-muted-nav:   #d4b896;
+            --pet-border:      #e0cdb8;
+            --font-display:    'Playfair Display', Georgia, serif;
+            --font-body:       'DM Sans', system-ui, sans-serif;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--pet-cream);
+            color: var(--pet-dark);
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        /* === HEADER === */
+        header {
+            background: var(--pet-dark);
+            color: #fff;
+            padding: 1.25rem 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header h1 {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: #fff;
+        }
+
+        header h1 span { color: var(--pet-sage-mid); }
+
+        nav { display: flex; gap: 2rem; }
+
+        nav a {
+            color: var(--pet-muted-nav);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 400;
+            letter-spacing: 0.04em;
+            transition: color 0.2s;
+        }
+
+        nav a:hover { color: #fff; }
+
+        /* === HERO === */
+        .hero {
+            padding: 5rem 2.5rem 4rem;
+            background: var(--pet-dark);
+            color: #fff;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            min-height: 420px;
+        }
+
+        .hero-text h2 {
+            font-family: var(--font-display);
+            font-size: 3.2rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.25rem;
+            letter-spacing: -0.03em;
+        }
+
+        .hero-text h2 em {
+            font-style: italic;
+            color: var(--pet-sage-mid);
+        }
+
+        .hero-text p {
+            color: var(--pet-muted-light);
+            font-size: 1.05rem;
+            font-weight: 300;
+            margin-bottom: 2rem;
+            max-width: 380px;
+        }
+
+        .hero-cta {
+            display: inline-block;
+            background: var(--pet-sage);
+            color: #fff;
+            padding: 0.85rem 2.2rem;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            border-radius: 3px;
+            letter-spacing: 0.03em;
+            transition: background 0.2s;
+        }
+
+        .hero-cta:hover { background: var(--pet-sage-hover); }
+
+        .hero-visual {
+            background: var(--pet-dark-2);
+            border-radius: 12px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .hero-card {
+            background: var(--pet-dark-3);
+            border-radius: 8px;
+            padding: 1.1rem 1.4rem;
+            border-left: 3px solid var(--pet-sage-mid);
+        }
+
+        .hero-card-label {
+            font-size: 0.75rem;
+            color: var(--pet-sage-mid);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 0.3rem;
+        }
+
+        .hero-card-val {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: #fff;
+        }
+
+        .hero-cards-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        /* === SOBRE === */
+        .content {
+            padding: 4rem 2.5rem;
+            max-width: 960px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-size: 0.75rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--pet-sage);
+            font-weight: 500;
+            margin-bottom: 0.6rem;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: 2.1rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.5rem;
+            color: var(--pet-dark);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-img {
+            background: var(--pet-sage-light);
+            border-radius: 12px;
+            height: 280px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--pet-border);
+            overflow: hidden;
+        }
+
+        .about-img-icon { font-size: 4rem; margin-bottom: 0.5rem; }
+
+        .about-img figcaption {
+            font-size: 0.8rem;
+            color: var(--pet-muted);
+            text-align: center;
+            padding: 0 1rem;
+        }
+
+        .about-text p {
+            color: var(--pet-muted);
+            font-size: 1rem;
+            font-weight: 300;
+            line-height: 1.8;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 2.5rem;
+        }
+
+        .feature {
+            padding: 1.4rem;
+            background: #fff;
+            border-radius: 10px;
+            border: 0.5px solid var(--pet-border);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .feature:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 24px rgba(30, 40, 37, 0.08);
+        }
+
+        .feature-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--pet-sage-light);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .feature-icon svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--pet-sage);
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .feature h3 {
+            font-size: 0.95rem;
+            font-weight: 500;
+            margin-bottom: 0.4rem;
+            color: var(--pet-dark);
+        }
+
+        .feature p {
+            font-size: 0.85rem;
+            color: var(--pet-muted);
+            line-height: 1.6;
+        }
+
+        /* === VÍDEO === */
+        .video-section {
+            background: var(--pet-dark);
+            padding: 4rem 2.5rem;
+        }
+
+        .video-inner {
+            max-width: 760px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .video-inner .section-label { color: var(--pet-sage-mid); }
+
+        .video-inner .section-title {
+            color: #fff;
+            margin-bottom: 2rem;
+        }
+
+        .video-wrap {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--pet-dark-3);
+        }
+
+        .video-wrap iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* === PLANOS === */
+        .plans-section {
+            padding: 4rem 2.5rem;
+            background: #fff;
+        }
+
+        .plans-inner {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .plans-title-wrap { text-align: center; margin-bottom: 0.5rem; }
+
+        .plans-title-wrap .section-label { display: inline-block; }
+
+        .plans-title-wrap .section-title { text-align: center; }
+
+        .plans-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .plan-card {
+            border: 0.5px solid var(--pet-border);
+            border-radius: 14px;
+            padding: 2rem 1.75rem;
+            background: var(--pet-cream);
+            position: relative;
+            transition: transform 0.2s;
+        }
+
+        .plan-card:hover { transform: translateY(-4px); }
+
+        .plan-card.featured {
+            background: var(--pet-dark);
+            border-color: var(--pet-dark);
+        }
+
+        .plan-card.featured .plan-name  { color: var(--pet-sage-mid); }
+        .plan-card.featured .plan-price { color: #fff; }
+        .plan-card.featured .plan-sub   { color: var(--pet-muted-light); }
+        .plan-card.featured .plan-feature { color: var(--pet-muted-nav); border-bottom-color: var(--pet-dark-3); }
+
+        .featured-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--pet-sage);
+            color: #fff;
+            font-size: 0.72rem;
+            padding: 3px 14px;
+            border-radius: 20px;
+            letter-spacing: 0.06em;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .plan-name {
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--pet-muted);
+            margin-bottom: 1rem;
+        }
+
+        .plan-price {
+            font-family: var(--font-display);
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: var(--pet-dark);
+            line-height: 1;
+        }
+
+        .plan-price sup {
+            font-size: 1rem;
+            vertical-align: super;
+            font-family: var(--font-body);
+            font-weight: 300;
+        }
+
+        .plan-sub {
+            font-size: 0.8rem;
+            color: var(--pet-muted);
+            margin-top: 0.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .plan-divider {
+            border: none;
+            border-top: 0.5px solid var(--pet-border);
+            margin-bottom: 1.5rem;
+        }
+
+        .plan-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.88rem;
+            color: var(--pet-muted);
+            padding: 0.4rem 0;
+            border-bottom: 0.5px solid var(--pet-border);
+        }
+
+        .plan-feature:last-of-type { border-bottom: none; }
+
+        .plan-check {
+            width: 16px;
+            height: 16px;
+            background: var(--pet-sage-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .plan-check svg {
+            width: 9px;
+            height: 9px;
+            stroke: var(--pet-sage);
+            fill: none;
+            stroke-width: 2.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .plan-btn {
+            display: block;
+            text-align: center;
+            margin-top: 1.75rem;
+            padding: 0.8rem;
+            border: 1px solid var(--pet-sage);
+            color: var(--pet-sage);
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            background: transparent;
+            width: 100%;
+            transition: background 0.2s, color 0.2s;
+            font-family: var(--font-body);
+        }
+
+        .plan-btn:hover { background: var(--pet-sage); color: #fff; }
+
+        .plan-card.featured .plan-btn {
+            background: var(--pet-sage);
+            color: #fff;
+            border-color: var(--pet-sage);
+        }
+
+        .plan-card.featured .plan-btn:hover { background: var(--pet-sage-hover); }
+
+        /* === CONTATO === */
+        .contact-section {
+            padding: 4rem 2.5rem;
+            background: var(--pet-cream);
+        }
+
+        .contact-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .contact-info h3 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--pet-dark);
+        }
+
+        .contact-info p {
+            color: var(--pet-muted);
+            font-weight: 300;
+            margin-bottom: 2rem;
+        }
+
+        .contact-detail {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            align-items: flex-start;
+        }
+
+        .contact-detail-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--pet-sage-light);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .contact-detail-icon svg {
+            width: 14px;
+            height: 14px;
+            stroke: var(--pet-sage);
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .contact-detail span {
+            font-size: 0.9rem;
+            color: var(--pet-muted);
+            padding-top: 4px;
+        }
+
+        /* === FORMULÁRIO === */
+        fieldset { border: none; padding: 0; }
+
+        legend {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--pet-dark);
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group { margin-bottom: 1.1rem; }
+
+        .form-group label {
+            display: block;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--pet-muted);
+            margin-bottom: 0.4rem;
+            letter-spacing: 0.03em;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 0.5px solid var(--pet-border);
+            border-radius: 7px;
+            background: #fff;
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            color: var(--pet-dark);
+            transition: border-color 0.2s;
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus { border-color: var(--pet-sage); }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-submit {
+            width: 100%;
+            padding: 0.95rem;
+            background: var(--pet-sage);
+            color: #fff;
+            border: none;
+            border-radius: 7px;
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 0.5rem;
+        }
+
+        .form-submit:hover { background: var(--pet-sage-hover); }
+
+        /* === FOOTER === */
+        footer {
+            background: var(--pet-dark);
+            color: var(--pet-muted-light);
+            text-align: center;
+            padding: 1.75rem;
+            font-size: 0.85rem;
+            font-weight: 300;
+        }
+
+        footer span { color: var(--pet-sage-mid); }
+
+        /* === RESPONSIVO === */
+        @media (max-width: 768px) {
+            header { padding: 1rem 1.25rem; flex-wrap: wrap; gap: 0.75rem; }
+            nav { gap: 1.25rem; }
+
+            .hero { grid-template-columns: 1fr; padding: 3rem 1.25rem 2.5rem; }
+            .hero-text h2 { font-size: 2.2rem; }
+
+            .content { padding: 3rem 1.25rem; }
+            .about-grid { grid-template-columns: 1fr; }
+            .features { grid-template-columns: 1fr; }
+
+            .video-section { padding: 3rem 1.25rem; }
+
+            .plans-section { padding: 3rem 1.25rem; }
+            .plans-grid { grid-template-columns: 1fr; }
+
+            .contact-section { padding: 3rem 1.25rem; }
+            .contact-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- Nome: Isabella Vasconcelos Fernandes Piassa -->
+<!-- RA: 5177296 -->
+
+<header>
+    <h1>Pet<span>System</span></h1>
+    <nav>
+        <a href="#sobre">Sobre</a>
+        <a href="#planos">Planos</a>
+        <a href="#contato">Contato</a>
+    </nav>
+</header>
+
+<main>
+
+    <!-- HERO -->
+    <div class="hero">
+        <div class="hero-text">
+            <h2>Gestão <em>inteligente</em> para sua clínica</h2>
+            <p>Organize atendimentos, clientes e finanças de forma simples, eficiente e elegante.</p>
+            <a href="#planos" class="hero-cta">Ver planos</a>
+        </div>
+        <div class="hero-visual" aria-hidden="true">
+            <div class="hero-card">
+                <div class="hero-card-label">Atendimentos hoje</div>
+                <div class="hero-card-val">28</div>
+            </div>
+            <div class="hero-cards-row">
+                <div class="hero-card">
+                    <div class="hero-card-label">Clientes ativos</div>
+                    <div class="hero-card-val">1.240</div>
+                </div>
+                <div class="hero-card">
+                    <div class="hero-card-label">Receita mensal</div>
+                    <div class="hero-card-val">R$18k</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SOBRE -->
+    <section id="sobre" class="content">
+        <div class="about-grid">
+            <figure class="about-img">
+                <div class="about-img-icon">🐾</div>
+                <figcaption>Gestão completa para clínicas e pet shops</figcaption>
+            </figure>
+            <div class="about-text">
+                <p class="section-label">Sobre o sistema</p>
+                <h2 class="section-title">Uma plataforma feita para quem cuida</h2>
+                <p>Nosso sistema foi desenvolvido especialmente para clínicas veterinárias e pet shops que desejam profissionalizar sua operação sem perder a agilidade do dia a dia. Gerencie tudo em um só lugar.</p>
+            </div>
+        </div>
+
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>
+                    </svg>
+                </div>
+                <h3>Agenda inteligente</h3>
+                <p>Controle de horários, lembretes automáticos e filas de espera.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                        <circle cx="9" cy="7" r="4"/>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+                    </svg>
+                </div>
+                <h3>Cadastro de clientes</h3>
+                <p>Histórico completo de pets, vacinas e prontuários digitais.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                    </svg>
+                </div>
+                <h3>Relatórios financeiros</h3>
+                <p>Dashboards em tempo real com faturamento, despesas e metas.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- VÍDEO -->
+    <section>
+        <div class="video-section">
+            <div class="video-inner">
+                <p class="section-label">Demonstração</p>
+                <h2 class="section-title">Veja o sistema em ação</h2>
+                <div class="video">
+                    <div class="video-wrap">
+                        <iframe
+                            src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                            title="Demonstração PetHome"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PLANOS -->
+    <section id="planos" class="plans-section">
+        <div class="plans-inner">
+            <div class="plans-title-wrap">
+                <p class="section-label">Planos e preços</p>
+                <h2 class="section-title">Escolha o plano ideal</h2>
+            </div>
+
+            <div class="plans-grid">
+                <div class="plan-card">
+                    <p class="plan-name">Básico</p>
+                    <p class="plan-price"><sup>R$</sup>49</p>
+                    <p class="plan-sub">por mês</p>
+                    <hr class="plan-divider">
+                    <div class="plan-feature">
+                        <div class="plan-check"><svg viewBox="0 0 10 10" aria-hidden="true"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div>
+                        Agenda online
+                    </div>
+                    <div class="plan-feature">
+                        <div class="plan-check"><svg viewBox="0 0 10 10" aria-hidden="true"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div>
+                        Cadastro de clientes
+                    </div>
+                    <div class="plan-feature">
+                        <div class="plan-check"><svg viewBox="0 0 10 10" aria-hidden="true"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div>
+                        Suporte por e-mail
+                    </div>
+                    <button class="plan-btn" type="button">Começar agora</button>
+                </div>
+
+                <div class="plan-card featured">
+                    <div class="featured-badge">Mais popular</div>
+                    <p class="plan-name">Profissional</p>
+                    <p class="plan-price"><sup>R$</sup>99</p>
+                    <p class="plan-sub">por mês</p>
+                    <hr class="plan-divider" style="border-top-color: #4e3520;">
+                    <div class="plan-feature">
+                        <div class="plan-check"><svg viewBox="0 0 10 10" aria-hidden="true"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div>
+                        Tudo do Básico
+                    </div>
+                    <div class="plan-feature">
+                        <div class="plan-check"><svg viewBox="0 0 10 10" aria-hidden="true"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div>
+                        Prontuários digitais
+                    </div>
+                    <div class="plan-feature">
+                        <div class="plan-check"><svg viewBox="0 0 10 10" aria-hidden="true"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div>
+                        Relatórios financeiros
+                    </div>
+                    <button class="plan-btn" type="button">Começar agora</button>
+                </div>
+
+                <div class="plan-card">
+                    <p class="plan-name">Premium</p>
+                    <p class="plan-price"><sup>R$</sup>149</p>
+                    <p class="plan-sub">por mês</p>
+                    <hr class="plan-divider">
+                    <div class="plan-feature">
+                        <div class="plan-check"><svg viewBox="0 0 10 10" aria-hidden="true"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div>
+                        Tudo do Profissional
+                    </div>
+                    <div class="plan-feature">
+                        <div class="plan-check"><svg viewBox="0 0 10 10" aria-hidden="true"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div>
+                        Multi-unidades
+                    </div>
+                    <div class="plan-feature">
+                        <div class="plan-check"><svg viewBox="0 0 10 10" aria-hidden="true"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div>
+                        Suporte prioritário 24h
+                    </div>
+                    <button class="plan-btn" type="button">Começar agora</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTATO -->
+    <section id="contato" class="contact-section">
+        <div class="contact-inner">
+            <div class="contact-info">
+                <p class="section-label">Contato</p>
+                <h3>Vamos conversar sobre o seu negócio?</h3>
+                <p>Nossa equipe está pronta para te ajudar a escolher o melhor plano e configurar o sistema.</p>
+
+                <div class="contact-detail">
+                    <div class="contact-detail-icon">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                            <polyline points="22,6 12,13 2,6"/>
+                        </svg>
+                    </div>
+                    <span>contato@pethome.com.br</span>
+                </div>
+
+                <div class="contact-detail">
+                    <div class="contact-detail-icon">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.9a16 16 0 0 0 6.19 6.19l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+                        </svg>
+                    </div>
+                    <span>(34) 9 9999-0000</span>
+                </div>
+            </div>
+
+            <div>
+                <form>
+                    <fieldset>
+                        <legend>Fale Conosco</legend>
+
+                        <div class="form-group">
+                            <label for="nome">Nome</label>
+                            <input type="text" id="nome" name="nome" placeholder="Seu nome completo" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">E-mail</label>
+                            <input type="email" id="email" name="email" placeholder="seu@email.com" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="telefone">Telefone</label>
+                            <input type="tel" id="telefone" name="telefone" placeholder="(XX) 9 XXXX-XXXX" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="mensagem">Mensagem</label>
+                            <textarea id="mensagem" name="mensagem" placeholder="Como podemos te ajudar?" required></textarea>
+                        </div>
+
+                        <button type="submit" class="form-submit">Enviar mensagem</button>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <p>© 2026 <span>PetHome</span> — Todos os direitos reservados</p>
+</footer>
+
+</body>
+</html>
